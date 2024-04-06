@@ -53,7 +53,7 @@ export default function Home() {
     const newAccounts = [...accountsArray, newAccountObj]
 
     setAccounts(newAccounts)
-    console.log(newAccounts)
+
   }
 
   function transfer(senderAccount, receiverAccount, amount) {
@@ -74,7 +74,6 @@ export default function Home() {
     const newAccounts = [...accountsArray, newSenderAccountObj, newReceiverAccountObj]
 
     setAccounts(newAccounts)
-    console.log(newAccounts)
 
   }
 
@@ -88,7 +87,6 @@ export default function Home() {
           className='m-1 space-x-4'
           onSubmit={(event) => {
           event.preventDefault()
-          withdraw("123", withdrawalAmount)
           }
         }>
           <input 
@@ -107,7 +105,6 @@ export default function Home() {
           className='m-1 space-x-4'
           onSubmit={(event) => {
           event.preventDefault()
-          deposit("123", depositAmount)
           }
         }>
           <input 
