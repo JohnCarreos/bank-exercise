@@ -1,1 +1,1 @@
-Answers are located in createAccount folder, login folder, and in app/page.js
+Answers are located in app/createAccount folder, app/login folder, and in app/page.js
