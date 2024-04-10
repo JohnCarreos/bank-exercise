@@ -1,13 +1,11 @@
-'use client'
+"use client";
 
 import React from "react";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const [accounts, setAccounts] = React.useState(() => {
-    const storedValue = localStorage.getItem('accounts');
-    return storedValue ? JSON.parse(storedValue) : '';})
+  const [accounts, setAccounts] = React.useState();
 
   const [accountLogin, setAccountLogin] = React.useState("");
   const [passwordInput, setPasswordInput] = React.useState("");
@@ -15,8 +13,22 @@ export default function Login() {
   const [balanceInput, setBalanceInput] = React.useState();
   const router = useRouter();
 
+  React.useEffect(() => {
+    const storedAccounts = JSON.parse(localStorage.getItem("accounts"));
+
+    if (storedAccounts) {
+      setAccounts(storedAccounts);
+    } else {
+      setAccounts([]);
+    }
+  }, []);
+
   function validateForm() {
-    return accountLogin.length > 0 && passwordInput.length > 0 && nameInput.length > 0;
+    return (
+      accountLogin.length > 0 &&
+      passwordInput.length > 0 &&
+      nameInput.length > 0
+    );
   }
 
   function handleSubmit(event) {
@@ -26,20 +38,18 @@ export default function Login() {
       accountNumber: accountLogin,
       name: nameInput,
       balance: balanceInput,
-      password: passwordInput
-    }
+      password: passwordInput,
+    };
 
-    setAccounts([...accounts, newAccount])
+    setAccounts([...accounts, newAccount]);
 
     localStorage.setItem("accounts", JSON.stringify([...accounts, newAccount]));
 
-    router.push('/login');
-    console.log(accounts)
+    router.push("/login");
   }
 
   return (
     <div className="flex justify-center items-center h-screen">
-      
       <form onSubmit={handleSubmit} className="flex flex-col w-64">
         <h1>CREATE ACCOUNT</h1>
         <div>
@@ -67,11 +77,10 @@ export default function Login() {
           <input
             className="text-black"
             type="text"
-            value={!balanceInput && balanceInput !== 0 ? '' : balanceInput}
+            value={!balanceInput && balanceInput !== 0 ? "" : balanceInput}
             onChange={(e) => setBalanceInput(e.target.value)}
           />
         </div>
-
 
         <div>
           <label>Password:</label>
@@ -83,15 +92,17 @@ export default function Login() {
           />
         </div>
 
-        <br/>
+        <br />
 
         <div>
-          <button className="py-2 px-3 bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-semibold rounded-md shadow focus:outline-none" type="submit" disabled={!validateForm()}>
+          <button
+            className="py-2 px-3 bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-semibold rounded-md shadow focus:outline-none"
+            type="submit"
+            disabled={!validateForm()}
+          >
             Create Account
           </button>
         </div>
-        
-
       </form>
     </div>
   );
